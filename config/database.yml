@@ -1,0 +1,37 @@
+default: &default
+  host: 127.0.0.1
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  port: 5432
+  user: <%= ENV['POKEMONS_DATABASE_USERNAME'] %>
+  password: <%= ENV['POKEMONS_DATABASE_PASSWORD'] %>
+
+development:
+  <<: *default
+  database: pokemons_dev
+
+test:
+  <<: *default
+  host: localhost
+  database: pokemons_test
+
+dev:
+  host: <%= ENV['POKEMONS_DEV_DATABASE_HOST'] %>
+  adapter: postgresql
+  database: <%= ENV['POKEMONS_DEV_DATABASE_NAME'] %>
+  encoding: utf8
+  pool: 5
+  port: 5432
+  username: <%= ENV['POKEMONS_DEV_DATABASE_USERNAME'] %>
+  password: <%= ENV['POKEMONS_DEV_DATABASE_PASSWORD'] %>
+
+production:
+  host: <%= ENV['POKEMONS_PROD_DATABASE_HOST'] %>
+  database: <%= ENV['POKEMONS_PROD_DATABASE_NAME'] %>
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  port: 5432
+  username: <%= ENV['POKEMONS_PROD_DATABASE_USERNAME'] %>
+  password: <%= ENV['POKEMONS_PROD_DATABASE_PASSWORD'] %>

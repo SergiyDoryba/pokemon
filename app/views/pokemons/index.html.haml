@@ -1,0 +1,7 @@
+= render partial: 'form', locals: { import: @import }
+%hr
+- if @items
+  %h2= "Pokemon list; COUNT: #{@items.count}"
+  = render partial: 'list_items', locals: { items: @items }
+%hr
+%h5= link_to '[go back Dashboard ]', root_path

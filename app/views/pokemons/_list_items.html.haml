@@ -1,0 +1,24 @@
+- if items.count > 0
+  %table.table.table-striped
+    %thead
+      %tr
+        %th{:scope => "col"} #
+        %th{:scope => "col"} Identifier
+        %th{:scope => "col"} Species id
+        %th{:scope => "col"} Height
+        %th{:scope => "col"} Weight
+        %th{:scope => "col"} Base experience
+        %th{:scope => "col"} Order
+        %th{:scope => "col"} Is default
+    %tbody
+      - items.each do |item|
+        %tr
+          %th{:scope => "row"}= item.id
+          %td= item.identifier
+          %td= item.species_id
+          %td= item.height
+          %td= item.weight
+          %td= item.base_experience
+          %td= item.order
+          %td= item.is_default
+      

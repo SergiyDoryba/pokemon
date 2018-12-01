@@ -1,0 +1,13 @@
+= form_for(import, url: import_pokemons_path, multipart: true) do |f|
+  - if import.errors.any?
+    %div{class: "alert alert-danger"}
+      - import.errors.full_messages.each do |msg|
+        %a{ href: '#', class: 'close', data: { dismiss: 'alert'}, aria: { label: "close"}} x
+        %span= msg
+  %hr
+  - flash.each do |key, value|
+    %div{class: "alert alert-#{ key }"}
+      %a{ href: '#', class: 'close', data: { dismiss: 'alert'}, aria: { label: "close"}} x
+      %span= value
+  = f.file_field :file
+  = f.submit 'Import Pokemons'
