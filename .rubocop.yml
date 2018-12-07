@@ -1,0 +1,154 @@
+AllCops:
+  Exclude:
+  - 'app/views/**/*'
+  - 'bin/*'
+  - 'db/schema.rb'
+  - 'db/migrate/*'
+  - 'log/**/*'
+  - 'node_modules/**/*'
+  - 'public/**/*'
+  - 'scripts/**/*'
+  - 'vendor/**/*'
+  - 'tmp/**/*'
+  - '.git/**/*'
+
+  TargetRubyVersion: 2.5
+  TargetRailsVersion: 5.2
+
+Documentation:
+  Enabled: false
+
+IndentationConsistency:
+  EnforcedStyle: 'rails'
+
+StringLiterals:
+  EnforcedStyle: single_quotes
+
+
+# Two spaces, no tabs (for indentation).
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/SpaceAfterColon:
+  Enabled: true
+
+Layout/SpaceAfterComma:
+  Enabled: true
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+
+Layout/SpaceAroundKeyword:
+  Enabled: true
+
+Layout/SpaceAroundOperators:
+  Enabled: true
+
+Layout/SpaceBeforeFirstArg:
+  Enabled: true
+
+# Defining a method with parameters needs parentheses.
+Style/MethodDefParentheses:
+  Enabled: true
+
+# Use `foo {}` not `foo{}`.
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+
+# Use `foo { bar }` not `foo {bar}`.
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+
+# Use `{ a: 1 }` not `{a:1}`.
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Layout/SpaceInsideParens:
+  Enabled: true
+
+# Check quotes usage according to lint rule below.
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
+
+# Detect hard tabs, no hard tabs.
+Layout/Tab:
+  Enabled: true
+
+# Blank lines should not have any spaces.
+Layout/TrailingBlankLines:
+  Enabled: true
+
+# No trailing whitespace.
+Layout/TrailingWhitespace:
+  Enabled: true
+
+# Use quotes for string literals when they are enough.
+Style/UnneededPercentQ:
+  Enabled: true
+
+# Align `end` with the matching keyword or starting expression except for
+# assignments, where it should be aligned with the LHS.
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: keyword
+
+# Use my_method(my_arg) not my_method( my_arg ) or my_method my_arg.
+Lint/RequireParentheses:
+  Enabled: true
+
+# Indent squiggly Heredocs properly
+Layout/IndentHeredoc:
+  EnforcedStyle: squiggly
+
+# Force constants to be frozen
+Style/MutableConstant:
+  Enabled: true
+
+#The `never` will enforce that the frozen string literal comment does not exist in a file.
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
+# Rails cops
+Rails:
+  Enabled: true
+
+Rails/Date:
+  Enabled: true
+  EnforcedStyle: 'strict'
+
+Rails/Exit:
+  Enabled: true
+
+Rails/FilePath:
+  Enabled: true
+
+Rails/Output:
+  Enabled: true
+  Exclude:
+
+Rails/ReversibleMigration:
+  Enabled: true
+
+Rails/ScopeArgs:
+  Enabled: true
+
+Rails/TimeZone:
+  Enabled: true
+  EnforcedStyle: 'flexible'
+
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+Rails/SafeNavigation:
+  Enabled: true
+  ConvertTry: false
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+
+
+inherit_gem:
+  rubocop-rails_config:
+  - config/rails.yml

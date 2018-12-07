@@ -30,4 +30,5 @@
 .idea/
 
 coverage/
+public/exports/
 /spec/fixtures/vcr

@@ -1,7 +1,10 @@
-= render partial: 'form', locals: { import: @import }
+- if user_signed_in?
+  = render partial: 'form', locals: { import: @import }
 %hr
 - if @items
   %h2= "Pokemon list; COUNT: #{@items.count}"
+  %h5= link_to '[go back Dashboard ]', root_path
+  - if user_signed_in?
+    %h5= link_to 'Export to CSV POKEMONS', export_pokemons_path
+    %h5= link_to 'DELETE ALL POKEMONS', remove_all_pokemons_path
   = render partial: 'list_items', locals: { items: @items }
-%hr
-%h5= link_to '[go back Dashboard ]', root_path

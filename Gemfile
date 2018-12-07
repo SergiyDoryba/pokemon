@@ -5,7 +5,9 @@ ruby '2.5.3'
 
 gem 'rails', '~> 5.2.1'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.7'
+gem 'puma_worker_killer'
+
 gem 'sass-rails', '~> 5.0'
 gem 'jquery-rails'
 gem 'uglifier', '>= 1.3.0'
@@ -27,8 +29,22 @@ gem 'turbolinks', '~> 5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.1.3'
 gem 'font-awesome-sass', '~> 5.0', '>= 5.0.13'
+
 gem 'pagy'
+
 gem 'foreman'
+
+gem 'sidekiq'
+
+gem 'devise'
+gem 'pundit', '~> 1.1.0'
+
+gem 'storext', '~> 2.2.2'
+gem 'services'
+gem 'interactor-rails'
+
+# export data
+gem 'xlsxtream'
 
 group :development, :test do
   gem 'byebug'
@@ -56,6 +72,9 @@ group :development do
   gem 'rubocop-rails_config', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubycritic', require: false
+
+  # gem 'letter_opener'
+  # gem 'mailcatcher'
 end
 
 group :test do

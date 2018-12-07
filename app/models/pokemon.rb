@@ -1,5 +1,12 @@
 class Pokemon < ApplicationRecord
+  include Storext.model
   validates :identifier, presence: true
+
+  store_attributes :parsed_data do
+    wikipedia_en String
+    wikipedia_ua String
+    wikipedia_ru String
+  end
 
   def self.assign_from_line_items(line)
     pokemon = Pokemon.where(identifier: line[:identifier]).first_or_initialize
@@ -13,18 +20,14 @@ class Pokemon < ApplicationRecord
     pokemon
   end
 
-  def self.import(file_path)
-    counter = 0
-    CSV.foreach(file_path, headers: true, header_converters: :symbol) do |line|
-      pokemon = Pokemon.assign_from_line_items(line)
-      if pokemon.save
-        counter += 1
-      else
-        puts "#{pokemon.identifier} - #{pokemon.errors.full_messages.join(', ')}"
+  def self.to_csv
+    attributes = %W(id identifier species_id height weight base_experience order is_default created_at)
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      all.each do |pokemon|
+        csv << pokemon.attributes.values_at(*attributes)
       end
     end
-
-    counter
   end
-
 end

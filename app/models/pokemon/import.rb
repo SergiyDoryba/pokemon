@@ -4,9 +4,9 @@ class Pokemon::Import
   attr_accessor :file, :imported_count
 
   def process!
-    # file_path = params[:file].present? ? params[:file].path : File.join(Rails.root, 'dataStore', 'pokemon.csv')
-    # count = Pokemon.import file_path
+    return unless file.present?
     @imported_count = 0
+
     ::CSV.foreach(file.path, headers: true, header_converters: :symbol) do |line|
       pokemon = Pokemon.assign_from_line_items(line)
       if pokemon.save
