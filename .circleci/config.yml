@@ -1,0 +1,70 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+    - image: circleci/ruby:2.5.3-node-browsers
+    - image: circleci/postgres:10.5-alpine-postgis
+      environment:
+        POSTGRES_USER: circleci
+        POSTGRES_DB: pokemons_test
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+    - restore_cache:
+        name: Restore bundle cache
+        key: quotations-{{ checksum "Gemfile.lock" }}
+
+    - run:
+        name: Install bundle
+        command: bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+    - save_cache:
+        name: Store bundle cache
+        key: quotations-{{ checksum "Gemfile.lock" }}
+        paths:
+        - vendor/bundle
+
+    - run: bundle exec rake db:create db:schema:load
+    - run:
+        name: Run RSpec
+        command: bundle exec rspec
+  deploy:
+    machine:
+      enabled: true
+    working_directory: ~/quotations
+
+    steps:
+    - checkout
+    - add_ssh_keys:
+        fingerprints:
+        - "44:be:ee:cc:d7:57:75:a0:80:5b:51:22:51:1f:bc:3c"
+    - run:
+        name: Deploy Prod to Heroku
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "dev" ]; then
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/dev-pokemons.git master
+            heroku run rake assets:precompile --app dev-pokemons
+            heroku run rake db:migrate --app dev-pokemons
+            heroku restart --app dev-pokemons
+          elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/prod-pokemons.git master
+            heroku run rake assets:precompile --app prod-pokemons
+            heroku run rake db:migrate --app prod-pokemons
+            heroku restart --app prod-pokemons
+          else
+            CIRCLECI=true
+          fi
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+    - build
+    - deploy:
+        requires:
+        - build
+        filters:
+          branches:
+            only:
+            - dev
+            - master
