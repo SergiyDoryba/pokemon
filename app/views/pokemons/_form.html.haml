@@ -4,7 +4,6 @@
       - import.errors.full_messages.each do |msg|
         %a{ href: '#', class: 'close', data: { dismiss: 'alert'}, aria: { label: "close"}} x
         %span= msg
-  %hr
   - flash.each do |key, value|
     %div{class: "alert alert-#{ key }"}
       %a{ href: '#', class: 'close', data: { dismiss: 'alert'}, aria: { label: "close"}} x

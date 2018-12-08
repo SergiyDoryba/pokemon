@@ -1,5 +1,5 @@
 - if items.count > 0
-  %table.table.table-striped
+  %table.table.table-striped#list-pokemons
     %thead
       %tr
         %th{:scope => "col"} #
@@ -10,9 +10,10 @@
         %th{:scope => "col"} Base experience
         %th{:scope => "col"} Order
         %th{:scope => "col"} Is default
+        %th{:scope => "col"} --- Behaviour ---
     %tbody
       - items.each do |item|
-        %tr
+        %tr{ data: { id: item.id } }
           %th{:scope => "row"}= item.id
           %td= item.identifier
           %td= item.species_id
@@ -21,4 +22,4 @@
           %td= item.base_experience
           %td= item.order
           %td= item.is_default
-      
+          %td= check_box_tag 'pokemon_id[]', item.id

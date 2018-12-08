@@ -1,6 +1,6 @@
 class PokemonsController < ApplicationController
-  before_action :pokemons, only: %I(index import export)
-  before_action :import_object, only: %I(index import export remove_all)
+  before_action :pokemons, only: %I(index import export fetch_data_pokemon_offsite)
+  before_action :import_object, only: %I(index import export remove_all fetch_data_pokemon_offsite)
 
   def index; end
 
@@ -14,22 +14,45 @@ class PokemonsController < ApplicationController
     end
   end
 
+  def fetch_data_pokemon_offsite
+    Pokemons::FetchDataFromOffSiteWorker.perform_async(Pokemon.need_fetch_data_from_off_site.pluck(:id))
+    flash[:info] = 'Run proccess to fetch data from Off Site for imported POkemons'
+    render action: :index
+  end
+
   def export
-    PokemonExportWorker.perform_async(current_user&.email)
+    Pokemons::ExportWorker.perform_async(current_user&.email)
     flash[:info] = 'Check email and download dump Pokemons'
     render action: :index
   end
 
   def remove_all
-    PokemonRemoveWorker.perform_async
-    flash[:info] = 'All pokemons info will be remove'
+    Pokemons::RemoveWorker.perform_async({})
+    flash[:info] = 'All pokemons info will be removed'
     render action: :index
+  end
+
+
+  def banch_destroy
+    Pokemons::RemoveWorker.perform_async(ids: params[:ids])
+    flash[:info] = 'Will be remove selected pokemons'
+    respond_to do |format|
+      format.json
+    end
+  end
+
+  def banch_fetch_data_pokemon_offsite
+    Pokemons::FetchDataFromOffSiteWorker.perform_async(params[:ids])
+    flash[:info] = 'Run proccess to fetch data from Off Site for imported POkemons'
+    respond_to do |format|
+      format.json
+    end
   end
 
   private
 
     def pokemons
-      @items = Pokemon.all.order(:identifier)
+      @items = Pokemon.all.order(order: :desc)
     end
 
     def import_object

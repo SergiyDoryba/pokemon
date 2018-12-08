@@ -23,7 +23,7 @@ class Pokemon::Export
 
     def folder_path
       @export_dir = Rails.root.join('public', 'exports', @user_email, DateTime.now.in_time_zone.strftime('%Y_%m_%d')).to_s
-      mkdir_p(export_dir) unless File.exists?(export_dir)
+      FileUtils.mkdir_p(export_dir) unless File.exists?(export_dir)
       export_dir
     end
 

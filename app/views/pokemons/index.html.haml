@@ -1,10 +1,20 @@
 - if user_signed_in?
   = render partial: 'form', locals: { import: @import }
-%hr
 - if @items
   %h2= "Pokemon list; COUNT: #{@items.count}"
   %h5= link_to '[go back Dashboard ]', root_path
   - if user_signed_in?
-    %h5= link_to 'Export to CSV POKEMONS', export_pokemons_path
-    %h5= link_to 'DELETE ALL POKEMONS', remove_all_pokemons_path
+    .row
+      .col-lg-6.pull-right
+        %button= link_to 'Export to XLS file', export_pokemons_path
+    .row
+      .col-lg-6.pull-left
+        %h3 ALL data
+        %button= link_to 'DELETE', remove_all_pokemons_path
+        %button= link_to 'Fetch data From OFF-SITE', fetch_data_pokemon_offsite_pokemons_path
+      .col-lg-6.pull-right
+        %h3 Selected items
+        %button= link_to 'DELETE', banch_destroy_pokemons_path, id: 'banch-delete-pokemons', method: :delete, remote: true
+        %button= link_to 'Fetch data From OFF-SITE', banch_fetch_data_pokemon_offsite_pokemons_path, id: 'banch-fetchdata-offsite-pokemons', method: :get, remote: true
+
   = render partial: 'list_items', locals: { items: @items }

@@ -8,6 +8,10 @@ class Pokemon < ApplicationRecord
     wikipedia_ru String
   end
 
+  def self.need_fetch_data_from_off_site
+    last(10)
+  end
+
   def self.assign_from_line_items(line)
     pokemon = Pokemon.where(identifier: line[:identifier]).first_or_initialize
     pokemon.assign_attributes(line.to_hash.slice(:species_id,

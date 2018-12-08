@@ -16,6 +16,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 4.0'
 gem 'haml'
 gem 'turbolinks', '~> 5'
+gem 'lodash-rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -45,6 +46,7 @@ gem 'interactor-rails'
 
 # export data
 gem 'xlsxtream'
+gem 'rest-client'
 
 group :development, :test do
   gem 'byebug'
