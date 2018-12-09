@@ -10,7 +10,8 @@
         %th{:scope => "col"} Base experience
         %th{:scope => "col"} Order
         %th{:scope => "col"} Is default
-        %th{:scope => "col"} --- Behaviour ---
+        - if user_signed_in?
+          %th{:scope => "col"} --- Behaviour ---
     %tbody
       - items.each do |item|
         %tr{ data: { id: item.id } }
@@ -22,4 +23,5 @@
           %td= item.base_experience
           %td= item.order
           %td= item.is_default
-          %td= check_box_tag 'pokemon_id[]', item.id
+          - if user_signed_in?
+            %td= check_box_tag 'pokemon_id[]', item.id
