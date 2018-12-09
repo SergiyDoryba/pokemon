@@ -2,25 +2,25 @@
   %table.table.table-striped#list-pokemons
     %thead
       %tr
-        %th{:scope => "col"} #
-        %th{:scope => "col"} Identifier
-        %th{:scope => "col"} Species id
-        %th{:scope => "col"} Height
-        %th{:scope => "col"} Weight
-        %th{:scope => "col"} Base experience
-        %th{:scope => "col"} Order
-        %th{:scope => "col"} Is default
+        %th{scope: 'col'} #
+        %th{scope: 'col'} Identifier
+        %th{scope: 'col'} Base experience
+        %th{scope: 'col'} Height
+        %th{scope: 'col'} Weight
+        %th{scope: 'col'} Species id
+        %th{scope: 'col'} Order
+        %th{scope: 'col'} Is default
         - if user_signed_in?
-          %th{:scope => "col"} --- Behaviour ---
+          %th{scope: 'col'} --- Behaviour ---
     %tbody
       - items.each do |item|
         %tr{ data: { id: item.id } }
-          %th{:scope => "row"}= item.id
+          %th{:scope => 'row'}= item.id
           %td= item.identifier
-          %td= item.species_id
+          %td= item.base_experience
           %td= item.height
           %td= item.weight
-          %td= item.base_experience
+          %td= item.species_id
           %td= item.order
           %td= item.is_default
           - if user_signed_in?

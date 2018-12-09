@@ -38,7 +38,6 @@ handleDeleteRequest = (hrefRequest, typeRequest, dataParams) ->
       $.map table_tr_items , (el) ->
         if (_.includes(dataParams.ids.map(Number), $(el).data('id')))
           $(el).hide()
-      return
     error: (xhr) ->
       console.log 'Errors!'
     complete: ->
@@ -59,4 +58,3 @@ handleFetchDataRequest = (hrefRequest, typeRequest, dataParams) ->
     error: (xhr) ->
       console.log 'Errors!'
     complete: ->
-  return

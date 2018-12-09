@@ -4,10 +4,13 @@ module Pokemons
     sidekiq_options retry: false, queue: 'default'
 
     def perform(params)
-      return if params.empty?
-      ids = params['ids']
-      Pokemon.where(id: ids).destroy_all
-      # ids.nil? ? Pokemon.destroy_all : Pokemon.where(id: ids).destroy_all
+      if !params.key?('ids')
+        Pokemon.destroy_all
+      else
+        return if params['ids'].nil?
+        ids = params['ids']
+        Pokemon.where(id: ids).destroy_all
+      end
     end
   end
 end

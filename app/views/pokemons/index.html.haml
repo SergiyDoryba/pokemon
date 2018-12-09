@@ -2,8 +2,7 @@
   = render partial: 'form', locals: { import: @import }
 - if @items
   %h2= "Pokemon list; COUNT: #{@items.count}"
-  %h5= link_to '[go back Dashboard ]', root_path
-  - if user_signed_in?
+  - if user_signed_in? && @items.count > 0
     .row
       .col-lg-6.pull-right
         %button= link_to 'Export to XLS file', export_pokemons_path
